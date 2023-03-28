@@ -1,38 +1,17 @@
-<!DOCTYPE html>
-<html>
-
-<p>Here are some results:</p>
-
 <?php
+require "header.php";
+//good connection, so do you thing
+$sql = "SELECT * FROM users;";
 
-$host = "localhost";
-$database = "lab9";
-$user = "webuser";
-$password = "P@ssw0rd";
+$results = mysqli_query($connection, $sql);
 
-$connection = mysqli_connect($host, $user, $password, $database);
-
-$error = mysqli_connect_error();
-if($error != null)
+//and fetch requsults
+while ($row = mysqli_fetch_assoc($results))
 {
-  $output = "<p>Unable to connect to database!</p>";
-  exit($output);
+  echo $row['username']." ".$row['firstName']." ".$row['lastName']." ".$row['email']." ".$row['password']."<br/>";
 }
-else
-{
-    //good connection, so do you thing
-    $sql = "SELECT * FROM users;";
 
-    $results = mysqli_query($connection, $sql);
-
-    //and fetch requsults
-    while ($row = mysqli_fetch_assoc($results))
-    {
-      echo $row['username']." ".$row['firstName']." ".$row['lastName']." ".$row['email']." ".$row['password']."<br/>";
-    }
-
-    mysqli_free_result($results);
-    mysqli_close($connection);
-}
+mysqli_free_result($results);
+mysqli_close($connection);
 ?>
 </html>
